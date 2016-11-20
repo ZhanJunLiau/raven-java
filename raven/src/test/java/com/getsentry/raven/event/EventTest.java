@@ -1,7 +1,7 @@
 package com.getsentry.raven.event;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 
@@ -25,7 +25,7 @@ public class EventTest {
                                         @Injectable final Date mockCloneTimestamp,
                                         @Injectable final UUID mockUuid)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockTimestamp.clone();
             result = mockCloneTimestamp;
         }};
@@ -40,7 +40,7 @@ public class EventTest {
     public void serializedEventContainsSerializableExtras(@Injectable final Object nonSerializableObject)
             throws Exception {
         final Event event = new Event(UUID.fromString("fb3fe928-69af-41a5-b76b-1db4c324caf6"));
-        new NonStrictExpectations() {{
+        new Expectations() {{
             nonSerializableObject.toString();
             result = "3c644639-9721-4e32-8cc8-a2b5b77f4424";
         }};

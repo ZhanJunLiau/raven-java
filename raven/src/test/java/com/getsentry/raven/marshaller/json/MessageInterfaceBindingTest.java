@@ -1,7 +1,7 @@
 package com.getsentry.raven.marshaller.json;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import com.getsentry.raven.event.interfaces.MessageInterface;
 import org.testng.annotations.Test;
@@ -25,7 +25,7 @@ public class MessageInterfaceBindingTest {
         final String message = "550ee459-cbb5-438e-91d2-b0bbdefab670";
         final List<String> parameters = Arrays.asList("33ed929b-d803-46b6-a57b-9c0feab1f468",
                 "5fc10379-6392-470d-9de5-e4cb805ab78c");
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockMessageInterface.getMessage();
             result = message;
             mockMessageInterface.getParameters();

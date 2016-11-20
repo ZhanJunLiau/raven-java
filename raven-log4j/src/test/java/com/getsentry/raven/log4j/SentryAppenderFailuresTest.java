@@ -24,7 +24,7 @@ public class SentryAppenderFailuresTest {
     @Injectable
     private Logger mockLogger = null;
     @SuppressWarnings("unused")
-    @Mocked("ravenInstance")
+    @Mocked
     private RavenFactory mockRavenFactory = null;
 
     @BeforeMethod
@@ -37,7 +37,7 @@ public class SentryAppenderFailuresTest {
 
     @Test
     public void testRavenFailureDoesNotPropagate() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockRaven.sendEvent((Event) any);
             result = new UnsupportedOperationException();
         }};
@@ -49,7 +49,7 @@ public class SentryAppenderFailuresTest {
 
     @Test
     public void testRavenFactoryFailureDoesNotPropagate() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             RavenFactory.ravenInstance((Dsn) any, anyString);
             result = new UnsupportedOperationException();
         }};

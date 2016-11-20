@@ -28,7 +28,7 @@ public class AbstractConnectionTest {
     @Injectable
     private Condition mockCondition = null;
     //Disable thread sleep during the tests
-    @Mocked("sleep")
+    @Mocked
     private Thread mockThread = null;
 
     @Test
@@ -57,7 +57,7 @@ public class AbstractConnectionTest {
     public void testExceptionOnSendStartLockDown(@Injectable final Event mockEvent) throws Exception {
         setField(abstractConnection, "lock", mockLock);
         setField(abstractConnection, "condition", mockCondition);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             abstractConnection.doSend((Event) any);
             result = new ConnectionException();
         }};
@@ -77,7 +77,7 @@ public class AbstractConnectionTest {
 
     @Test
     public void testLockDownDoublesTheWaitingTime(@Injectable final Event mockEvent) throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             abstractConnection.doSend((Event) any);
             result = new ConnectionException();
         }};
@@ -98,7 +98,7 @@ public class AbstractConnectionTest {
     @Test
     public void testLockDownDoesntDoubleItAtMax(@Injectable final Event mockEvent) throws Exception {
         setField(abstractConnection, "waitingTime", AbstractConnection.DEFAULT_MAX_WAITING_TIME);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             abstractConnection.doSend((Event) any);
             result = new ConnectionException();
         }};
@@ -131,7 +131,7 @@ public class AbstractConnectionTest {
         callbacks.add(callback);
 
         setField(abstractConnection, "eventSendFailureCallbacks", callbacks);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             abstractConnection.doSend((Event) any);
             result = new ConnectionException();
         }};

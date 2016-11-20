@@ -22,7 +22,7 @@ public class HttpEventBuilderHelperTest {
 
     @Test
     public void testNoRequest() throws Exception {
-        new NonStrictExpectations(RavenServletRequestListener.class) {{
+        new Expectations(RavenServletRequestListener.class) {{
             RavenServletRequestListener.getServletRequest();
             result = null;
         }};
@@ -39,7 +39,7 @@ public class HttpEventBuilderHelperTest {
     @Test
     public void testWithRequest(@Injectable final HttpServletRequest mockHttpServletRequest) throws Exception {
 
-        new NonStrictExpectations(RavenServletRequestListener.class) {{
+        new Expectations(RavenServletRequestListener.class) {{
             RavenServletRequestListener.getServletRequest();
             result = mockHttpServletRequest;
         }};
@@ -59,7 +59,7 @@ public class HttpEventBuilderHelperTest {
                                       @Injectable final Principal mockUserPrincipal,
                                       @Injectable("93ad24e4-cad1-4214-af8e-2e48e76b02de") final String mockUsername)
             throws Exception {
-        new NonStrictExpectations(RavenServletRequestListener.class) {{
+        new Expectations(RavenServletRequestListener.class) {{
             RavenServletRequestListener.getServletRequest();
             result = mockHttpServletRequest;
             mockHttpServletRequest.getUserPrincipal();
@@ -80,7 +80,7 @@ public class HttpEventBuilderHelperTest {
     public void testWithIpAddress(@Injectable final HttpServletRequest mockHttpServletRequest,
                                   @Injectable("d90e92cc-1929-4f9e-a44c-3062a8b00c70") final String mockIpAddress)
             throws Exception {
-        new NonStrictExpectations(RavenServletRequestListener.class) {{
+        new Expectations(RavenServletRequestListener.class) {{
             RavenServletRequestListener.getServletRequest();
             result = mockHttpServletRequest;
             mockHttpServletRequest.getRemoteAddr();

@@ -29,7 +29,7 @@ public class AppEngineAsyncConnectionTest {
     @Injectable
     private Queue mockQueue = null;
     @SuppressWarnings("unused")
-    @Mocked("getDefaultQueue")
+    @Mocked
     private QueueFactory queueFactory = null;
     @Injectable("7b55a129-6975-4434-8edc-29ceefd38c95")
     private String mockConnectionId = null;
@@ -48,9 +48,9 @@ public class AppEngineAsyncConnectionTest {
     @BeforeMethod
     public void setUp() throws Exception {
         asyncConnection = new AppEngineAsyncConnection(mockConnectionId, mockConnection);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             QueueFactory.getDefaultQueue();
-            result = mockQueue;
+            result = mockQueue; minTimes = 0;
         }};
     }
 
@@ -92,10 +92,10 @@ public class AppEngineAsyncConnectionTest {
 
     @Test
     public void testQueuedEventSubmitted(@SuppressWarnings("unused")
-                                         @Mocked("setDoNotRetry") DeferredTaskContext deferredTaskContext)
+                                         @Mocked DeferredTaskContext deferredTaskContext)
             throws Exception {
         final Event event = new EventBuilder().build();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockQueue.add((TaskOptions) any);
             result = new Delegate<TaskHandle>() {
                 @SuppressWarnings("unused")

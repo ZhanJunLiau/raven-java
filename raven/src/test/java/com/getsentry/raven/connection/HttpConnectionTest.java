@@ -44,13 +44,13 @@ public class HttpConnectionTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockUrl.openConnection();
-            result = mockUrlConnection;
+            result = mockUrlConnection; minTimes = 0;
             mockUrlConnection.getOutputStream();
-            result = mockOutputStream;
+            result = mockOutputStream; minTimes = 0;
             mockUrlConnection.getInputStream();
-            result = mockInputStream;
+            result = mockInputStream; minTimes = 0;
         }};
     }
 
@@ -126,7 +126,7 @@ public class HttpConnectionTest {
     @Test(expectedExceptions = {ConnectionException.class})
     public void testHttpErrorThrowsAnException(@Injectable final Event mockEvent) throws Exception {
         final String httpErrorMessage = "93e3ddb1-c4f3-46c3-9900-529de83678b7";
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockUrlConnection.getOutputStream();
             result = new IOException();
             mockUrlConnection.getErrorStream();
@@ -152,7 +152,7 @@ public class HttpConnectionTest {
 
     @Test
     public void testEmptyStringDoesNotSIOOBE(@Injectable final Event mockEvent) throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockUrlConnection.getOutputStream();
             result = new IOException();
             mockUrlConnection.getErrorStream();

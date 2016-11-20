@@ -54,9 +54,10 @@ public class AsyncConnection implements Connection {
      *                         be set to {@code Executors.newSingleThreadExecutor()}
      * @param gracefulShutdown Indicates whether or not the shutdown operation should be managed by a ShutdownHook.
      * @param shutdownTimeout  timeout for graceful shutdown of the executor, in milliseconds.
+     * @param runtime          Java Runtime instance to attach shutdown hooks to.
      */
     public AsyncConnection(Connection actualConnection, ExecutorService executorService, boolean gracefulShutdown,
-        long shutdownTimeout) {
+        long shutdownTimeout, Runtime runtime) {
         this.actualConnection = actualConnection;
         if (executorService == null)
             this.executorService = Executors.newSingleThreadExecutor();
@@ -64,17 +65,33 @@ public class AsyncConnection implements Connection {
             this.executorService = executorService;
         if (gracefulShutdown) {
             this.gracefulShutdown = gracefulShutdown;
-            addShutdownHook();
+            addShutdownHook(runtime);
         }
         this.shutdownTimeout = shutdownTimeout;
     }
 
     /**
+     * Creates a connection which will rely on an executor to send events.
+     * <p>
+     * Will propagate the {@link #close()} operation.
+     *
+     * @param actualConnection connection used to send the events.
+     * @param executorService  executorService used to process events, if null, the executorService will automatically
+     *                         be set to {@code Executors.newSingleThreadExecutor()}
+     * @param gracefulShutdown Indicates whether or not the shutdown operation should be managed by a ShutdownHook.
+     * @param shutdownTimeout  timeout for graceful shutdown of the executor, in milliseconds.
+     */
+    public AsyncConnection(Connection actualConnection, ExecutorService executorService, boolean gracefulShutdown,
+                           long shutdownTimeout) {
+        this(actualConnection, executorService, gracefulShutdown, shutdownTimeout, Runtime.getRuntime());
+    }
+
+    /**
      * Adds a hook to shutdown the {@link #executorService} gracefully when the JVM shuts down.
      */
-    private void addShutdownHook() {
+    private void addShutdownHook(Runtime runtime) {
         // JUL loggers are shutdown by an other shutdown hook, it's possible that nothing will get actually logged.
-        Runtime.getRuntime().addShutdownHook(shutDownHook);
+        runtime.addShutdownHook(shutDownHook);
     }
 
     /**

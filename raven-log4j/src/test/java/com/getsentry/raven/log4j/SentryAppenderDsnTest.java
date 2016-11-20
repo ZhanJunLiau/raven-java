@@ -20,10 +20,10 @@ public class SentryAppenderDsnTest {
     @Injectable
     private Raven mockRaven = null;
     @SuppressWarnings("unused")
-    @Mocked("ravenInstance")
+    @Mocked
     private RavenFactory mockRavenFactory = null;
     @SuppressWarnings("unused")
-    @Mocked("dsnLookup")
+    @Mocked
     private Dsn mockDsn = null;
 
     @BeforeMethod

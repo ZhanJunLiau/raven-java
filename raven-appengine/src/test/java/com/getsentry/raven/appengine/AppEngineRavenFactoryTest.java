@@ -40,7 +40,7 @@ public class AppEngineRavenFactoryTest {
     @Test
     public void asyncConnectionWithoutConnectionIdGeneratesDefaultId() throws Exception {
         final String dnsString = "a1fe25d3-bc41-4040-8aa2-484e5aae87c5";
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockDsn.toString();
             result = dnsString;
         }};
@@ -56,7 +56,7 @@ public class AppEngineRavenFactoryTest {
     @Test
     public void asyncConnectionWithConnectionIdUsesId(
             @Injectable("543afd41-379d-41cb-8c99-8ce73e83a0cc") final String connectionId) throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockDsn.getOptions();
             result = Collections.singletonMap(AppEngineRavenFactory.CONNECTION_IDENTIFIER, connectionId);
         }};
@@ -83,7 +83,7 @@ public class AppEngineRavenFactoryTest {
     public void asyncConnectionWithQueueNameSetsQueue(
             @Mocked final AppEngineAsyncConnection mockAppEngineAsyncConnection,
             @Injectable("queueName") final String mockQueueName) throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockDsn.getOptions();
             result = Collections.singletonMap(AppEngineRavenFactory.QUEUE_NAME, mockQueueName);
         }};

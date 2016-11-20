@@ -15,10 +15,10 @@ public class SentryAppenderCloseTest {
     @Injectable
     private Raven mockRaven = null;
     @SuppressWarnings("unused")
-    @Mocked("ravenInstance")
+    @Mocked
     private RavenFactory mockRavenFactory = null;
     @SuppressWarnings("unused")
-    @Mocked("dsnLookup")
+    @Mocked
     private Dsn mockDsn = null;
 
     @BeforeMethod
@@ -72,7 +72,7 @@ public class SentryAppenderCloseTest {
         // This checks that even if sentry wasn't setup correctly its appender can still be closed.
         final SentryAppender sentryAppender = new SentryAppender();
         sentryAppender.setHandler(mockUpErrorHandler.getMockInstance());
-        new NonStrictExpectations() {{
+        new Expectations() {{
             RavenFactory.ravenInstance((Dsn) any, anyString);
             result = new UnsupportedOperationException();
         }};

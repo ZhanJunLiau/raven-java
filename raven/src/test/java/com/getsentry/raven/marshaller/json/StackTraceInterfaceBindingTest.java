@@ -1,7 +1,7 @@
 package com.getsentry.raven.marshaller.json;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import com.getsentry.raven.event.interfaces.StackTraceInterface;
 import org.testng.annotations.Test;
@@ -23,7 +23,7 @@ public class StackTraceInterfaceBindingTest {
         final String className = "31b26f01-9b97-442b-9f36-8a317f94ad76";
         final int lineNumber = 1;
         final StackTraceElement stackTraceElement = new StackTraceElement(className, methodName, "File.java", lineNumber);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockStackTraceInterface.getStackTrace();
             result = new StackTraceElement[]{stackTraceElement};
         }};
@@ -37,7 +37,7 @@ public class StackTraceInterfaceBindingTest {
     public void testFramesCommonWithEnclosing() throws Exception {
         final JsonGeneratorParser jsonGeneratorParser = newJsonGenerator();
         final StackTraceElement stackTraceElement = new StackTraceElement("", "", "File.java", 0);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockStackTraceInterface.getStackTrace();
             result = new StackTraceElement[]{stackTraceElement, stackTraceElement};
             mockStackTraceInterface.getFramesCommonWithEnclosing();
@@ -54,7 +54,7 @@ public class StackTraceInterfaceBindingTest {
     public void testFramesCommonWithEnclosingDisabled() throws Exception {
         final JsonGeneratorParser jsonGeneratorParser = newJsonGenerator();
         final StackTraceElement stackTraceElement = new StackTraceElement("", "", "File.java", 0);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockStackTraceInterface.getStackTrace();
             result = new StackTraceElement[]{stackTraceElement, stackTraceElement};
             mockStackTraceInterface.getFramesCommonWithEnclosing();

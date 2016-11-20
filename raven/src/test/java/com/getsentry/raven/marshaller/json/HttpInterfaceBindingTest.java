@@ -3,7 +3,7 @@ package com.getsentry.raven.marshaller.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.getsentry.raven.event.interfaces.HttpInterface;
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import org.testng.annotations.Test;
 import org.testng.collections.Lists;
@@ -30,7 +30,7 @@ public class HttpInterfaceBindingTest {
         headers.put("Header2", Lists.newArrayList("Value1", "Value2"));
         final HashMap<String, String> cookies = new HashMap<>();
         cookies.put("Cookie1", "Value1");
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockMessageInterface.getHeaders();
             result = headers;
             mockMessageInterface.getRequestUrl();

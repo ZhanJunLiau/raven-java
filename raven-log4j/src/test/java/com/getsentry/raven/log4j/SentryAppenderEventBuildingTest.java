@@ -152,7 +152,9 @@ public class SentryAppenderEventBuildingTest {
         final String methodName = "ce7cd195-9e6d-4315-b883-12951be3da6e";
         final String fileName = "1ab50f43-f11c-4439-a05c-d089281411fa";
         final int line = 42;
-        new NonStrictExpectations() {{
+        locationInfo.fullInfo = "";
+
+        new Expectations() {{
             locationInfo.getClassName();
             result = className;
             locationInfo.getMethodName();
@@ -161,7 +163,6 @@ public class SentryAppenderEventBuildingTest {
             result = fileName;
             locationInfo.getLineNumber();
             result = Integer.toString(line);
-            setField(locationInfo, "fullInfo", "");
         }};
 
         sentryAppender.append(new LoggingEvent(null, mockLogger, 0, Level.ERROR, null, null,
@@ -185,7 +186,9 @@ public class SentryAppenderEventBuildingTest {
         final String methodName = "b";
         final String fileName = "c";
         final int line = 42;
-        new NonStrictExpectations() {{
+        locationInfo.fullInfo = "";
+
+        new Expectations() {{
             locationInfo.getClassName();
             result = className;
             locationInfo.getMethodName();
@@ -194,7 +197,6 @@ public class SentryAppenderEventBuildingTest {
             result = fileName;
             locationInfo.getLineNumber();
             result = Integer.toString(line);
-            setField(locationInfo, "fullInfo", "");
         }};
 
         sentryAppender.append(new LoggingEvent(null, mockLogger, 0, Level.ERROR, null, null,
@@ -248,7 +250,7 @@ public class SentryAppenderEventBuildingTest {
     @Test
     public void testExtraTagObtainedFromMdcConvertedToString(@Injectable final Object extraTagValue) throws Exception {
         Map<String, Object> properties = Collections.singletonMap(mockExtraTag, extraTagValue);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             extraTagValue.toString();
             result = "3c8981b4-01ad-47ec-8a3a-77a0bbcb42e2";
         }};

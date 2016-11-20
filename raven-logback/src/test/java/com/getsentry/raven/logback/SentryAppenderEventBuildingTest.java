@@ -6,7 +6,7 @@ import ch.qos.logback.core.BasicStatusManager;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.status.OnConsoleStatusListener;
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import mockit.Verifications;
 import com.getsentry.raven.Raven;
@@ -45,7 +45,7 @@ public class SentryAppenderEventBuildingTest {
         sentryAppender.setExtraTags(mockExtraTag);
         sentryAppender.setMinLevel(mockMinLevel);
 
-        new NonStrictExpectations() {{
+        new Expectations() {{
             final BasicStatusManager statusManager = new BasicStatusManager();
             final OnConsoleStatusListener listener = new OnConsoleStatusListener();
             listener.start();

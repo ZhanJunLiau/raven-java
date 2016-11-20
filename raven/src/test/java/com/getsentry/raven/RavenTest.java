@@ -1,7 +1,7 @@
 package com.getsentry.raven;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import mockit.Verifications;
 import com.getsentry.raven.connection.Connection;
@@ -55,7 +55,7 @@ public class RavenTest {
 
     @Test
     public void testSendEventFailingIsCaught() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockConnection.send((Event) any);
             result = new RuntimeException();
         }};
@@ -152,7 +152,7 @@ public class RavenTest {
 
     @Test(expectedExceptions = RuntimeException.class)
     public void testCloseConnectionFailed() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockConnection.close();
             result = new IOException();
         }};

@@ -35,7 +35,7 @@ public class JsonMarshallerTest {
         // Do not compress by default during the tests
         jsonMarshaller.setCompression(false);
 
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getId();
             result = UUID.fromString("00000000-0000-0000-0000-000000000000");
             mockEvent.getTimestamp();
@@ -48,7 +48,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventIdWrittenProperly(@Injectable final UUID mockUuid) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getId();
             result = mockUuid;
             mockUuid.toString();
@@ -63,7 +63,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventMessageWrittenProperly(@Injectable("message") final String mockMessage) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getMessage();
             result = mockMessage;
         }};
@@ -76,7 +76,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventTimestampWrittenProperly(@Injectable final Date mockTimestamp) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getTimestamp();
             result = mockTimestamp;
             mockTimestamp.getTime();
@@ -103,7 +103,7 @@ public class JsonMarshallerTest {
     @Test(dataProvider = "levelProvider")
     public void testEventLevelWrittenProperly(final Event.Level eventLevel, String levelFile) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getLevel();
             result = eventLevel;
         }};
@@ -116,7 +116,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventLoggerWrittenProperly(@Injectable("logger") final String mockLogger) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getLogger();
             result = mockLogger;
         }};
@@ -129,7 +129,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventPlaftormWrittenProperly(@Injectable("platform") final String mockPlatform) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getPlatform();
             result = mockPlatform;
         }};
@@ -142,7 +142,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventCulpritWrittenProperly(@Injectable("culprit") final String mockCulprit) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getCulprit();
             result = mockCulprit;
         }};
@@ -156,7 +156,7 @@ public class JsonMarshallerTest {
     public void testEventTagsWrittenProperly(@Injectable("tagName") final String mockTagName,
                                              @Injectable("tagValue") final String mockTagValue) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getTags();
             result = Collections.singletonMap(mockTagName, mockTagValue);
         }};
@@ -170,7 +170,7 @@ public class JsonMarshallerTest {
     public void testFingerPrintWrittenProperly(@Injectable("fingerprint1") final String mockFingerprint1,
                                              @Injectable("fingerprint2") final String mockFingerprint2) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getFingerprint();
             result = Arrays.asList(mockFingerprint1, mockFingerprint2);
         }};
@@ -184,7 +184,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventServerNameWrittenProperly(@Injectable("serverName") final String mockServerName) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getServerName();
             result = mockServerName;
         }};
@@ -197,7 +197,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventReleaseWrittenProperly(@Injectable("release") final String mockRelease) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getRelease();
             result = mockRelease;
         }};
@@ -210,7 +210,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventEnvironmentWrittenProperly(@Injectable("environment") final String mockEnvironment) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getEnvironment();
             result = mockEnvironment;
         }};
@@ -241,7 +241,7 @@ public class JsonMarshallerTest {
         breadcrumbs.add(breadcrumb1);
         breadcrumbs.add(breadcrumb2);
 
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getBreadcrumbs();
             result = breadcrumbs;
         }};
@@ -254,7 +254,7 @@ public class JsonMarshallerTest {
     @Test
     public void testEventChecksumWrittenProperly(@Injectable("1234567890abcdef") final String mockChecksum) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getChecksum();
             result = mockChecksum;
         }};
@@ -284,7 +284,7 @@ public class JsonMarshallerTest {
     @Test(dataProvider = "extraProvider")
     public void testEventExtraWrittenProperly(final String extraKey, final Object extraValue, String extraFile) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getExtra();
             result = Collections.singletonMap(extraKey, extraValue);
         }};
@@ -298,7 +298,7 @@ public class JsonMarshallerTest {
     public void testEventExtraWrittenProperly(@Injectable("key") final String mockExtraKey,
                                               @Injectable final Object mockExtraValue) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getExtra();
             result = Collections.singletonMap(mockExtraKey, mockExtraValue);
             mockExtraValue.toString();
@@ -315,7 +315,7 @@ public class JsonMarshallerTest {
             @Injectable final SentryInterface mockSentryInterface,
             @Injectable final InterfaceBinding<SentryInterface> mockInterfaceBinding) throws Exception {
         final JsonOutputStreamParser jsonOutputStreamParser = newJsonOutputStream();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockEvent.getSentryInterfaces();
             result = Collections.singletonMap("interfaceKey", mockSentryInterface);
             mockInterfaceBinding.writeInterface((JsonGenerator) any, mockSentryInterface);

@@ -3,7 +3,7 @@ package com.getsentry.raven.dsn;
 import com.getsentry.raven.config.JndiLookup;
 import mockit.Expectations;
 import mockit.Mocked;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -63,8 +63,8 @@ public class DsnTest {
 
     @Test
     public void testJndiLookupFailsWithException(
-            @SuppressWarnings("unused") @Mocked("jndiLookup") JndiLookup mockJndiLookup) throws Exception {
-        new NonStrictExpectations() {{
+            @SuppressWarnings("unused") @Mocked JndiLookup mockJndiLookup) throws Exception {
+        new Expectations() {{
             JndiLookup.jndiLookup("dsn");
             result = new ClassNotFoundException("Couldn't find the JNDI classes");
         }};
@@ -74,8 +74,8 @@ public class DsnTest {
 
     @Test
     public void testJndiLookupFailsWithError(
-            @SuppressWarnings("unused") @Mocked("jndiLookup") JndiLookup mockJndiLookup) throws Exception {
-        new NonStrictExpectations() {{
+            @SuppressWarnings("unused") @Mocked JndiLookup mockJndiLookup) throws Exception {
+        new Expectations() {{
             JndiLookup.jndiLookup("dsn");
             result = new NoClassDefFoundError("Couldn't find the JNDI classes");
         }};
@@ -105,9 +105,9 @@ public class DsnTest {
     }
 
     @Test
-    public void testDsnLookupWithEnvironmentVariable(@Mocked("getenv") final System system) throws Exception {
+    public void testDsnLookupWithEnvironmentVariable(@Mocked final System system) throws Exception {
         final String dsn = "759ed060-dd4f-4478-8a1a-3f23e044787c";
-        new NonStrictExpectations() {{
+        new Expectations() {{
             System.getenv("SENTRY_DSN");
             result = dsn;
         }};

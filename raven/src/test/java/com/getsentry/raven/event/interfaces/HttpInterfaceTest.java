@@ -1,7 +1,7 @@
 package com.getsentry.raven.event.interfaces;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -21,7 +21,7 @@ public class HttpInterfaceTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockHttpServletRequest.getRequestURL();
             result = new StringBuffer();
             mockHttpServletRequest.getMethod();
@@ -57,7 +57,7 @@ public class HttpInterfaceTest {
             mockHttpServletRequest.getHeaderNames();
             result = Collections.emptyEnumeration();
             mockHttpServletRequest.getHeaders(anyString);
-            result = Collections.emptyEnumeration();
+            result = Collections.emptyEnumeration(); minTimes = 0;
         }};
     }
 
@@ -84,7 +84,7 @@ public class HttpInterfaceTest {
         final String headerKey = "2c4a28c6-cef6-4847-92be-bf161ec4edc6";
         final String headerValue = "2327b4fe-c35f-4bbb-842a-a89c718f5f01";
 
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockHttpServletRequest.getRequestURL();
             result = new StringBuffer(requestUrl);
             mockHttpServletRequest.getMethod();
@@ -149,7 +149,7 @@ public class HttpInterfaceTest {
 
     @Test
     public void testNullCookies() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockHttpServletRequest.getCookies();
             result = null;
         }};

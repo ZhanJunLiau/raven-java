@@ -2,7 +2,7 @@ package com.getsentry.raven.event.interfaces;
 
 import mockit.Delegate;
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import org.testng.annotations.Test;
 
 import java.util.Deque;
@@ -18,7 +18,7 @@ public class SentryExceptionTest {
     public void ensureConversionToQueueKeepsOrder(@Injectable final Throwable mockCause) throws Exception {
         final String exceptionMessage = "208ea34a-9c99-42d6-a399-59a4c85900dc";
         final String causeMessage = "46a1b2ee-629b-49eb-a2be-f5250c995ea4";
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockThrowable.getCause();
             result = new Delegate<Throwable>() {
                 @SuppressWarnings("unused")

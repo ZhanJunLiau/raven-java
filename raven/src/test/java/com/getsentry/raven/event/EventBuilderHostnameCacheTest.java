@@ -32,12 +32,12 @@ public class EventBuilderHostnameCacheTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockLocalHost.getCanonicalHostName();
-            result = mockLocalHostName;
+            result = mockLocalHostName; minTimes = 0;
 
             mockTimingOutLocalHost.getCanonicalHostName();
-            result = new RuntimeException("For all intents and purposes, an exception is the same as a timeout");
+            result = new RuntimeException("For all intents and purposes, an exception is the same as a timeout"); minTimes = 0;
         }};
         // Clean Hostname Cache
         resetHostnameCache();
@@ -45,9 +45,9 @@ public class EventBuilderHostnameCacheTest {
 
     @Test
     public void successfulHostnameRetrievalIsCachedForFiveHours(
-            @SuppressWarnings("unused") @Mocked("currentTimeMillis") final System system)
+            @SuppressWarnings("unused") @Mocked final System system)
             throws Exception {
-        new NonStrictExpectations(InetAddress.class) {{
+        new Expectations(InetAddress.class) {{
             System.currentTimeMillis();
             result = 1L;
             InetAddress.getLocalHost();
@@ -62,9 +62,9 @@ public class EventBuilderHostnameCacheTest {
 
     @Test
     public void unsuccessfulHostnameRetrievalIsCachedForOneSecond(
-            @SuppressWarnings("unused") @Mocked("currentTimeMillis") final System system)
+            @SuppressWarnings("unused") @Mocked final System system)
             throws Exception {
-        new NonStrictExpectations(InetAddress.class) {{
+        new Expectations(InetAddress.class) {{
             System.currentTimeMillis();
             result = 1L;
             InetAddress.getLocalHost();
@@ -79,7 +79,7 @@ public class EventBuilderHostnameCacheTest {
 
     @Test
     public void unsuccessfulHostnameRetrievalUsesLastKnownCachedValue() throws Exception {
-        new NonStrictExpectations(InetAddress.class) {{
+        new Expectations(InetAddress.class) {{
             InetAddress.getLocalHost();
             result = mockLocalHost;
             result = mockTimingOutLocalHost;

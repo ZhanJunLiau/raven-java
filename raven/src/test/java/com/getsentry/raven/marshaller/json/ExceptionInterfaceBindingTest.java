@@ -3,7 +3,7 @@ package com.getsentry.raven.marshaller.json;
 import com.fasterxml.jackson.core.JsonGenerator;
 import mockit.Delegate;
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import com.getsentry.raven.event.interfaces.ExceptionInterface;
 import com.getsentry.raven.event.interfaces.SentryException;
@@ -29,7 +29,7 @@ public class ExceptionInterfaceBindingTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockStackTraceInterfaceBinding.writeInterface(withInstanceOf(JsonGenerator.class), (StackTraceInterface) any);
             result = new Delegate<Void>() {
                 @SuppressWarnings("unused")
@@ -47,7 +47,7 @@ public class ExceptionInterfaceBindingTest {
         final JsonGeneratorParser jsonGeneratorParser = newJsonGenerator();
         final String message = "6e65f60d-9f22-495a-9556-7a61eeea2a14";
         final Throwable throwable = new IllegalStateException(message);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockExceptionInterface.getExceptions();
             result = new Delegate<Deque<SentryException>>() {
                 @SuppressWarnings("unused")
@@ -67,7 +67,7 @@ public class ExceptionInterfaceBindingTest {
         setField((Object) DefaultPackageException.class, "name", DefaultPackageException.class.getSimpleName());
         final JsonGeneratorParser jsonGeneratorParser = newJsonGenerator();
         final Throwable throwable = new DefaultPackageException();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockExceptionInterface.getExceptions();
             result = new Delegate<Deque<SentryException>>() {
                 @SuppressWarnings("unused")
@@ -89,7 +89,7 @@ public class ExceptionInterfaceBindingTest {
         final Throwable throwable1 = new IllegalStateException(message1);
         final String message2 = "f1296959-5b86-45f7-853a-cdc25196710b";
         final Throwable throwable2 = new IllegalStateException(message2, throwable1);
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockExceptionInterface.getExceptions();
             result = new Delegate<Deque<SentryException>>() {
                 @SuppressWarnings("unused")

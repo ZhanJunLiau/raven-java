@@ -1,7 +1,7 @@
 package com.getsentry.raven.servlet;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -35,7 +35,7 @@ public class RavenServletRequestListenerTest {
     @Test
     public void requestListenerContainsTheCurrentRequest(@Injectable final HttpServletRequest mockHttpServletRequest)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockServletRequestEvent.getServletRequest();
             result = mockHttpServletRequest;
         }};
@@ -48,7 +48,7 @@ public class RavenServletRequestListenerTest {
     @Test
     public void requestListenerDoesntWorkWithNonHttpRequests(@Injectable final ServletRequest mockServletRequest)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockServletRequestEvent.getServletRequest();
             result = mockServletRequest;
         }};
@@ -61,7 +61,7 @@ public class RavenServletRequestListenerTest {
     @Test
     public void requestListenerDestroyRemovesTheCurrentRequest(@Injectable final HttpServletRequest mockHttpServletRequest)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockServletRequestEvent.getServletRequest();
             result = mockHttpServletRequest;
         }};
@@ -75,10 +75,6 @@ public class RavenServletRequestListenerTest {
     @Test
     public void requestListenerSpecificToLocalThread(@Injectable final HttpServletRequest mockHttpServletRequest)
             throws Exception {
-        new NonStrictExpectations() {{
-            mockServletRequestEvent.getServletRequest();
-            result = mockHttpServletRequest;
-        }};
 
         new Thread() {
             @Override

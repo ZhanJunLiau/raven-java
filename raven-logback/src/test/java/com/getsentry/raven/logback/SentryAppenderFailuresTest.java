@@ -22,13 +22,13 @@ public class SentryAppenderFailuresTest {
     @Injectable
     private Context mockContext = null;
     @SuppressWarnings("unused")
-    @Mocked("ravenInstance")
+    @Mocked
     private RavenFactory mockRavenFactory;
 
     @BeforeMethod
     public void setUp() throws Exception {
         new MockUpStatusPrinter();
-        new NonStrictExpectations() {{
+        new Expectations() {{
             final BasicStatusManager statusManager = new BasicStatusManager();
             final OnConsoleStatusListener listener = new OnConsoleStatusListener();
             listener.start();
@@ -44,7 +44,7 @@ public class SentryAppenderFailuresTest {
         final SentryAppender sentryAppender = new SentryAppender(mockRaven);
         sentryAppender.setContext(mockContext);
         sentryAppender.setMinLevel("ALL");
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockRaven.sendEvent((Event) any);
             result = new UnsupportedOperationException();
         }};

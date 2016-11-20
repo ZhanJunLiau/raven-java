@@ -1,7 +1,7 @@
 package com.getsentry.raven.marshaller.json;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import mockit.Tested;
 import com.getsentry.raven.event.interfaces.UserInterface;
 import com.getsentry.raven.marshaller.json.JsonComparisonUtil.JsonGeneratorParser;
@@ -25,7 +25,7 @@ public class UserInterfaceBindingTest {
         final String username = "3eaa555a-e813-4778-9852-7c1880bf0fd7";
         final String email = "9bcade34-a58c-4616-9de7-bc8b456c96de";
         final String ipAddress = "9a1a658b-6f74-43ae-9e45-0f89f4c5fcb4";
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockUserInterface.getId();
             result = id;
             mockUserInterface.getUsername();

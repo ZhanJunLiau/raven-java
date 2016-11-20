@@ -1,8 +1,9 @@
 package com.getsentry.raven.event;
 
 import mockit.Injectable;
-import mockit.NonStrictExpectations;
+import mockit.Expectations;
 import com.getsentry.raven.event.interfaces.SentryInterface;
+import mockit.Mocked;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -31,18 +32,18 @@ public class EventBuilderTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        new NonStrictExpectations(InetAddress.class) {{
+        new Expectations(InetAddress.class) {{
             InetAddress.getLocalHost();
-            result = mockLocalHost;
+            result = mockLocalHost; minTimes = 0;
             mockLocalHost.getCanonicalHostName();
-            result = "local";
+            result = "local"; minTimes = 0;
         }};
     }
 
     @Test
     public void builtEventHasRandomlyGeneratedUuid(@Injectable final UUID mockUuid)
             throws Exception {
-        new NonStrictExpectations(UUID.class) {{
+        new Expectations(UUID.class) {{
             UUID.randomUUID();
             result = mockUuid;
         }};
@@ -92,7 +93,7 @@ public class EventBuilderTest {
     @Test
     public void builtEventWithoutTimestampHasDefaultTimestamp(@Injectable final Date mockTimestamp)
             throws Exception {
-        new NonStrictExpectations(Date.class) {{
+        new Expectations(Date.class) {{
             new Date();
             result = mockTimestamp;
             mockTimestamp.clone();
@@ -108,7 +109,7 @@ public class EventBuilderTest {
     @Test
     public void builtEventWithTimestampHasProperTimestamp(@Injectable final Date mockTimestamp)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockTimestamp.clone();
             result = mockTimestamp;
         }};
@@ -130,7 +131,7 @@ public class EventBuilderTest {
     }
 
     @Test
-    public void builtEventWithLevelHasProperLevel(@Injectable final Event.Level mockLevel)
+    public void builtEventWithLevelHasProperLevel(@Mocked final Event.Level mockLevel)
             throws Exception {
         final EventBuilder eventBuilder = new EventBuilder();
         eventBuilder.withLevel(mockLevel);
@@ -256,7 +257,7 @@ public class EventBuilderTest {
     public void builtEventWithNoServerNameUsesDefaultIfSearchTimesOut()
             throws Exception {
         resetHostnameCache();
-        new NonStrictExpectations(InetAddress.class) {{
+        new Expectations(InetAddress.class) {{
             InetAddress.getLocalHost();
             result = mockLocalHost;
             mockLocalHost.getCanonicalHostName();
@@ -276,7 +277,7 @@ public class EventBuilderTest {
     public void builtEventWithNoServerNameUsesLocalHost(@Injectable("serverName") final String mockServerName)
             throws Exception {
         resetHostnameCache();
-        new NonStrictExpectations(InetAddress.class) {{
+        new Expectations(InetAddress.class) {{
             InetAddress.getLocalHost();
             result = mockLocalHost;
             mockLocalHost.getCanonicalHostName();
@@ -395,7 +396,7 @@ public class EventBuilderTest {
             @Injectable("sentryInterfaceName") final String mockSentryInterfaceName,
             @Injectable final SentryInterface mockSentryInterface)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockSentryInterface.getInterfaceName();
             result = mockSentryInterfaceName;
         }};
@@ -414,7 +415,7 @@ public class EventBuilderTest {
             @Injectable final SentryInterface mockSentryInterface,
             @Injectable final SentryInterface mockSentryInterface2)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockSentryInterface.getInterfaceName();
             result = mockSentryInterfaceName;
             mockSentryInterface2.getInterfaceName();
@@ -437,7 +438,7 @@ public class EventBuilderTest {
             @Injectable final SentryInterface mockSentryInterface,
             @Injectable final SentryInterface mockSentryInterface2)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockSentryInterface.getInterfaceName();
             result = mockSentryInterfaceName;
             mockSentryInterface2.getInterfaceName();
@@ -459,7 +460,7 @@ public class EventBuilderTest {
             @Injectable final SentryInterface mockSentryInterface,
             @Injectable final SentryInterface mockSentryInterface2)
             throws Exception {
-        new NonStrictExpectations() {{
+        new Expectations() {{
             mockSentryInterface.getInterfaceName();
             result = mockSentryInterfaceName;
             mockSentryInterface2.getInterfaceName();

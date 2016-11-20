@@ -21,10 +21,10 @@ public class SentryAppenderDsnTest {
     @Injectable
     private Context mockContext = null;
     @SuppressWarnings("unused")
-    @Mocked("ravenInstance")
+    @Mocked
     private RavenFactory mockRavenFactory = null;
     @SuppressWarnings("unused")
-    @Mocked("dsnLookup")
+    @Mocked
     private Dsn mockDsn = null;
 
     @BeforeMethod
@@ -33,7 +33,7 @@ public class SentryAppenderDsnTest {
         sentryAppender = new SentryAppender();
         sentryAppender.setContext(mockContext);
 
-        new NonStrictExpectations() {{
+        new Expectations() {{
             final BasicStatusManager statusManager = new BasicStatusManager();
             final OnConsoleStatusListener listener = new OnConsoleStatusListener();
             listener.start();
